@@ -14,18 +14,18 @@ export function Header({ locale, t }: { locale: Locale; t: Dictionary }) {
 
   return (
     <>
-      <div className="bg-ink px-4 py-2.5 text-center text-[13px] tracking-[0.04em] text-cream">{t.announce}</div>
-      <header className="sticky top-0 z-40 border-b border-ink/15 bg-paper/95 backdrop-blur">
+      <div className="bg-black px-4 py-2 text-center text-[12px] tracking-[0.06em] text-ash">{t.announce}</div>
+      <header className="sticky top-0 z-40 border-b border-bone/10 bg-char/95 text-bone backdrop-blur-md [&_a:hover]:text-amber [&_a]:text-bone">
         <div className="container-site flex items-center gap-4 py-3 lg:gap-6 lg:py-4">
           <details className="group lg:hidden">
             <summary className="flex h-11 w-11 cursor-pointer list-none items-center justify-center [&::-webkit-details-marker]:hidden" aria-label={t.menu}>
               <MenuIcon className="h-6 w-6" />
             </summary>
-            <nav aria-label={t.menu} className="absolute inset-x-0 top-full border-b border-ink/15 bg-paper px-4 pb-6 pt-2 shadow-sm">
+            <nav aria-label={t.menu} className="absolute inset-x-0 top-full border-b border-bone/10 bg-char px-4 pb-8 pt-2">
               <ul className="flex flex-col">
                 {nav.map((item) => (
                   <li key={item.href}>
-                    <Link href={item.href} className="flex min-h-[48px] items-center border-b border-ink/10 font-display text-xl no-underline">
+                    <Link href={item.href} className="flex min-h-[48px] items-center border-b border-bone/10 font-display text-2xl no-underline">
                       {item.label}
                     </Link>
                   </li>
@@ -35,8 +35,8 @@ export function Header({ locale, t }: { locale: Locale; t: Dictionary }) {
           </details>
 
           <Link href={`/${locale}`} className="flex flex-1 flex-col items-center leading-none no-underline lg:flex-none lg:items-start">
-            <span className="font-display text-[19px] font-bold tracking-[0.06em] text-bark sm:text-[26px]">A BEAR&apos;S BATCH</span>
-            <span className="mt-1 hidden font-display text-xs italic text-mid sm:block">Liquor handcrafted by De Beer</span>
+            <span className="font-display text-[19px] font-bold tracking-[0.06em] text-bone sm:text-[24px]">A BEAR&apos;S BATCH</span>
+            <span className="mt-1 hidden font-display text-xs italic text-ash sm:block">Liquor handcrafted by De Beer</span>
           </Link>
 
           <nav aria-label="Hoofdmenu" className="ml-auto hidden lg:block">

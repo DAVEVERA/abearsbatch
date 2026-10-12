@@ -11,6 +11,10 @@ export type Flavor = {
   shopifyHandle: string;
   character: Character;
   image: string;
+  /** Vrijstaande fles (transparante achtergrond) voor slider en hero. */
+  cutout: { src: string; width: number; height: number };
+  /** Kleur van de vloeistof, voor gloed en achtergrond in de slider. */
+  glow: string;
   /** Alcoholpercentage; null = nog aan te leveren door de klant. */
   abv: number | null;
   tagline: Localized;
@@ -32,6 +36,8 @@ export const flavors: Flavor[] = [
     shopifyHandle: 'epilos',
     character: 'warm',
     image: '/images/smaken/epilos.webp',
+    cutout: { src: '/images/flessen/epilos.webp', width: 752, height: 1400 },
+    glow: '#7A1E14',
     abv: 19,
     tagline: { nl: 'Vol, donker en verleidelijk.', en: 'Full, dark and seductive.' },
     description: {
@@ -55,6 +61,8 @@ export const flavors: Flavor[] = [
     shopifyHandle: 'haktiri',
     character: 'warm',
     image: '/images/smaken/haktiri.webp',
+    cutout: { src: '/images/flessen/haktiri.webp', width: 753, height: 1400 },
+    glow: '#C99A55',
     abv: null,
     tagline: { nl: 'Warm, rijk en gelaagd.', en: 'Warm, rich and layered.' },
     description: {
@@ -78,6 +86,8 @@ export const flavors: Flavor[] = [
     shopifyHandle: 'floreta',
     character: 'fruitig',
     image: '/images/smaken/floreta.webp',
+    cutout: { src: '/images/flessen/floreta.webp', width: 754, height: 1400 },
+    glow: '#9C1C2E',
     abv: null,
     tagline: { nl: 'Bloemig, fruitig en verfijnd.', en: 'Floral, fruity and refined.' },
     description: {
@@ -101,6 +111,8 @@ export const flavors: Flavor[] = [
     shopifyHandle: 'teposo',
     character: 'tropisch',
     image: '/images/smaken/teposo.webp',
+    cutout: { src: '/images/flessen/teposo.webp', width: 754, height: 1400 },
+    glow: '#D98A2B',
     abv: null,
     tagline: { nl: 'Exotisch, fris en pittig.', en: 'Exotic, fresh and spicy.' },
     description: {
@@ -124,6 +136,8 @@ export const flavors: Flavor[] = [
     shopifyHandle: 'fragaki',
     character: 'fruitig',
     image: '/images/smaken/fragaki.webp',
+    cutout: { src: '/images/flessen/fragaki.webp', width: 757, height: 1400 },
+    glow: '#E0864E',
     abv: null,
     tagline: { nl: 'Fruitig, fris en speels.', en: 'Fruity, fresh and playful.' },
     description: {
@@ -147,6 +161,8 @@ export const flavors: Flavor[] = [
     shopifyHandle: 'colkina',
     character: 'tropisch',
     image: '/images/smaken/colkina.webp',
+    cutout: { src: '/images/flessen/colkina.webp', width: 750, height: 1400 },
+    glow: '#CFA040',
     abv: null,
     tagline: { nl: 'Zacht, tropisch en aromatisch.', en: 'Smooth, tropical and aromatic.' },
     description: {
@@ -170,6 +186,8 @@ export const flavors: Flavor[] = [
     shopifyHandle: 'palmusa',
     character: 'tropisch',
     image: '/images/smaken/palmusa.webp',
+    cutout: { src: '/images/flessen/palmusa.webp', width: 754, height: 1400 },
+    glow: '#A9561C',
     abv: null,
     tagline: { nl: 'Vol en verleidelijk.', en: 'Full and seductive.' },
     description: {
@@ -193,6 +211,8 @@ export const flavors: Flavor[] = [
     shopifyHandle: 'silkimi',
     character: 'romig',
     image: '/images/smaken/silkimi.webp',
+    cutout: { src: '/images/flessen/silkimi.webp', width: 758, height: 1400 },
+    glow: '#E6D6B8',
     abv: null,
     tagline: { nl: 'Fluweelzacht, warm en verleidelijk.', en: 'Velvety, warm and seductive.' },
     description: {
