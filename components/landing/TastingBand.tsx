@@ -16,17 +16,13 @@ export function TastingBand({
 }) {
   const row = [...bottles, ...bottles];
   return (
-    <section className="relative overflow-hidden bg-bark py-20 text-bone sm:py-28">
+    <section className="relative overflow-hidden py-20 text-bone sm:py-28">
       <div className="container-site flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <span className="text-[12px] font-semibold uppercase tracking-[0.28em] text-[#F2C99A]">{copy.eyebrow}</span>
-          <h2 className="mt-3 font-display text-[clamp(40px,9vw,80px)] font-semibold leading-[0.95] tracking-[-0.02em]">{copy.title}</h2>
+          <h2 className="font-display text-[clamp(40px,9vw,80px)] font-semibold leading-[0.95] tracking-[-0.02em]">{copy.title}</h2>
           <p className="mt-4 max-w-[36ch] text-lg text-bone/80">{copy.body}</p>
         </div>
-        <Link
-          href={href}
-          className="inline-flex min-h-[56px] items-center gap-2 self-start rounded-full bg-bone px-7 font-semibold text-char no-underline transition-colors duration-300 hover:bg-amber hover:text-char sm:self-auto"
-        >
+        <Link href={href} className="btn-on-dark self-start sm:self-auto">
           {copy.cta} · {priceLabel}
         </Link>
       </div>

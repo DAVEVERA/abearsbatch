@@ -1,24 +1,26 @@
 'use client';
 
-import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { useRef } from 'react';
 import type { LandingCopy } from '@/lib/landing-copy';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-/** Vier stappen langs een lont die opbrandt terwijl je scrolt. */
+/**
+ * Vier stappen langs een lont die opbrandt terwijl je scrolt.
+ * prefers-reduced-motion via CSS (globals.css), niet via een branch in de render:
+ * `useReducedMotion()` is tijdens SSR null en breekt anders de hydration.
+ */
 export function Process({ copy }: { copy: LandingCopy['process'] }) {
   const ref = useRef<HTMLOListElement>(null);
-  const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.75', 'end 0.6'] });
   const fuse = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
 
   return (
-    <section className="grain relative bg-soot py-24 text-bone sm:py-32">
+    <section className="relative py-24 text-bone sm:py-32">
       <div className="container-site grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
         <div className="lg:sticky lg:top-32 lg:self-start">
-          <span className="text-[12px] font-semibold uppercase tracking-[0.28em] text-amber">{copy.eyebrow}</span>
-          <h2 className="mt-4 max-w-[14ch] font-display text-[clamp(38px,8vw,72px)] font-semibold leading-[0.98] tracking-[-0.02em]">{copy.title}</h2>
+          <h2 className="max-w-[14ch] font-display text-[clamp(38px,8vw,72px)] font-semibold leading-[0.98] tracking-[-0.02em]">{copy.title}</h2>
         </div>
 
         <ol ref={ref} className="relative flex flex-col gap-14 pl-10 sm:gap-20 sm:pl-14">
@@ -26,17 +28,17 @@ export function Process({ copy }: { copy: LandingCopy['process'] }) {
           <span aria-hidden="true" className="absolute bottom-2 left-[7px] top-2 w-px bg-bone/15 sm:left-[11px]" />
           <motion.span
             aria-hidden="true"
-            style={{ scaleY: reduce ? 1 : fuse }}
-            className="absolute bottom-2 left-[7px] top-2 w-px origin-top bg-gradient-to-b from-amber via-ember to-ember shadow-[0_0_12px_2px_rgba(226,98,43,0.6)] sm:left-[11px]"
+            style={{ scaleY: fuse }}
+            className="motion-fuse absolute bottom-2 left-[7px] top-2 w-px origin-top bg-gradient-to-b from-amber via-ember to-ember shadow-[0_0_12px_2px_rgba(226,98,43,0.6)] sm:left-[11px]"
           />
           {copy.steps.map((step, i) => (
             <motion.li
               key={step.title}
-              initial={reduce ? false : { opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '0px 0px -15% 0px' }}
               transition={{ duration: 0.8, ease: EASE }}
-              className="relative"
+              className="motion-reveal relative"
             >
               <span aria-hidden="true" className="absolute -left-10 top-3 flex h-4 w-4 items-center justify-center sm:-left-14 sm:h-6 sm:w-6">
                 <span className="h-2.5 w-2.5 rounded-full bg-ember shadow-[0_0_14px_4px_rgba(226,98,43,0.55)] sm:h-3 sm:w-3" />

@@ -23,11 +23,74 @@
   .eyebrow {
     @apply text-[13px] font-semibold uppercase tracking-[0.14em] text-mid;
   }
-  .btn-primary {
-    @apply inline-flex min-h-[52px] items-center justify-center rounded-full bg-copper px-7 font-semibold text-paper no-underline transition-colors hover:bg-bark hover:text-paper;
+  /*
+    Knoppen. De basiskleur staat op het element zelf; ::before is de veeg die er
+    overheen loopt. Binnen een eigen stacking context (isolate) tekent een kind met
+    z-index -1 bóven de achtergrond van het element maar ónder de tekst, dus de
+    veeg dekt de vulling af zonder het label te raken.
+  */
+  .btn-base {
+    @apply relative isolate inline-flex min-h-[54px] items-center justify-center overflow-hidden rounded-[2px] border px-9 font-display text-[15px] font-semibold uppercase leading-none no-underline;
+    /* De pagina bestaat uit fijne lijnen en schreefletter; een gevuld blok in een
+       sans valt daarbuiten. Daarom een dunne omlijning in dezelfde displayletter als
+       de koppen, met ruime spatiëring zoals op een etiket. De vulling komt pas bij
+       hover, als veeg. */
+    letter-spacing: 0.2em;
+    transition:
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.3s ease;
   }
+  .btn-base::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    transform: translate3d(-101%, 0, 0);
+    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .btn-base:hover::before,
+  .btn-base:focus-visible::before {
+    transform: translate3d(0, 0, 0);
+  }
+  .btn-base:hover {
+    transform: translateY(-2px);
+  }
+  .btn-base:active {
+    transform: translateY(0) scale(0.985);
+  }
+  /* Op lichte vlakken: koper dat naar warm oranje doorloopt. */
+  .btn-primary {
+    @apply btn-base border-ink/35 bg-transparent text-ink hover:border-transparent hover:text-paper;
+  }
+  .btn-primary::before {
+    background: linear-gradient(100deg, #c97b3d, #a35f2a 55%, #7a4620);
+  }
+
+  /* Op donkere vlakken: bone dat naar amber doorloopt. */
+  .btn-on-dark {
+    @apply btn-base border-bone/40 bg-transparent text-bone hover:border-transparent hover:text-char;
+  }
+  .btn-on-dark::before {
+    background: linear-gradient(100deg, #ffd9a0, #f0a35c 50%, #e2622b);
+  }
+
   .btn-outline {
-    @apply inline-flex min-h-[44px] items-center justify-center rounded-full border border-ink px-5 text-sm font-semibold text-ink transition-colors hover:bg-ink hover:text-paper;
+    @apply btn-base min-h-[48px] border-bone/30 bg-transparent px-6 text-[13px] text-bone hover:border-transparent hover:text-char;
+  }
+  .btn-outline::before {
+    background: theme(colors.bone);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn-base,
+    .btn-base::before {
+      transition-duration: 0.01ms;
+    }
+    .btn-base:hover,
+    .btn-base:active {
+      transform: none;
+    }
   }
   .container-site {
     @apply mx-auto w-full max-w-site px-4 sm:px-8;
@@ -35,6 +98,40 @@
   .placeholder-photo {
     @apply flex items-center justify-center rounded-xl bg-cream p-2 text-center text-xs text-muted;
   }
+}
+
+/* ---------- Doorlopende laag ----------
+   Op de landingspagina loopt één achtergrondlaag van boven tot onder: paginakleur,
+   vuurdeeltjes en korrel. Header en footer mogen daar geen eigen vlak overheen
+   leggen, want dat tekent precies de horizontale band die weg moet.
+
+   Alleen hier, niet globaal: header en footer staan in de gedeelde layout en worden
+   ook gebruikt door de lichte shop- en smaakpagina's, waar bone tekst op een
+   doorzichtig vlak onleesbaar zou zijn. De landingspagina zet daarvoor het merk
+   `data-seamless`.
+
+   De header is hier bewust niet sticky. Een doorzichtige sticky header laat de
+   inhoud onder de navigatie doorschuiven; een ondoorzichtige geeft weer een band.
+   Zonder vastzetten is er geen van beide. */
+body:has([data-seamless]) {
+  @apply bg-char;
+}
+body:has([data-seamless]) [data-chrome],
+body:has([data-seamless]) footer {
+  position: relative;
+  z-index: 10;
+  background: none;
+  backdrop-filter: none;
+}
+body:has([data-seamless]) [data-chrome]::after {
+  display: none;
+}
+
+/* Op de landingspagina scrolt de header weg en mag het logo groot. Op de overige
+   pagina's blijft hij vastgezet; een sticky balk van 172px eet daar te veel scherm,
+   dus daar een compacter logo. */
+body:not(:has([data-seamless])) [data-chrome] img {
+  height: 84px;
 }
 
 /* ---------- Landing: vuur, as, motion ---------- */
@@ -98,6 +195,12 @@
 @media (prefers-reduced-motion: reduce) {
   .anim-rise, .anim-bottle { animation-duration: 0.01ms; }
   .anim-flicker, .anim-drift, .anim-cue, .anim-marquee { animation: none; }
+  /* Scroll-gestuurde motion uitzetten. Via CSS, niet via een branch in de render:
+     `useReducedMotion()` is tijdens SSR null en levert dan andere markup op server
+     dan op client, waardoor de hydration breekt. */
+  .manifesto-word { opacity: 1 !important; color: #EDE6DA !important; }
+  .motion-reveal { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+  .motion-fuse { transform: scaleY(1) !important; }
 }
 @keyframes float {
   0%, 100% { transform: translateY(0) rotate(0deg); }

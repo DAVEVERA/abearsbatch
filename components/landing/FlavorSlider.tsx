@@ -15,7 +15,6 @@ import {
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Character } from '@/lib/flavors';
 import type { LandingCopy } from '@/lib/landing-copy';
-import { EmberField } from './EmberField';
 
 export type SliderFlavor = {
   slug: string;
@@ -26,7 +25,6 @@ export type SliderFlavor = {
   href: string;
   cutout: { src: string; width: number; height: number };
   glow: string;
-  price: string | null;
 };
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -134,20 +132,17 @@ export function FlavorSlider({
   flavors,
   copy,
   characterLabels,
-  pricePlaceholder,
   volume,
 }: {
   flavors: SliderFlavor[];
   copy: LandingCopy['slider'];
   characterLabels: Record<Character, string>;
-  pricePlaceholder: string;
   volume: string;
 }) {
   const reduce = useReducedMotion();
   const [active, setActive] = useState(0);
   const [dir, setDir] = useState(1);
   const [spacing, setSpacing] = useState(220);
-  const [interacted, setInteracted] = useState(false);
   const progress = useMotionValue(0);
   const stageRef = useRef<HTMLDivElement>(null);
   const drag = useRef<{ x: number; t: number; start: number; moved: boolean; lastX: number; lastT: number } | null>(null);
@@ -175,7 +170,6 @@ export function FlavorSlider({
       const next = Math.max(0, Math.min(count - 1, i));
       setDir(next >= active ? 1 : -1);
       setActive(next);
-      setInteracted(true);
       if (reduce) progress.set(next);
       else animate(progress, next, SPRING);
     },
@@ -238,32 +232,24 @@ export function FlavorSlider({
   }
 
   const glow = flavors[glowIndex].glow;
-  const pad = (n: number) => String(n).padStart(2, '0');
 
   return (
     <section
       id="collectie"
       aria-roledescription={copy.roledescription}
       aria-label={copy.title}
-      className="grain relative isolate scroll-mt-16 overflow-hidden bg-char pb-16 pt-20 text-bone sm:pt-28"
+      className="relative isolate scroll-mt-16 overflow-hidden pb-16 pt-20 text-bone sm:pt-28"
     >
       {/* Kleur van de vloeistof als gloed */}
       <motion.div
         aria-hidden="true"
         animate={{ backgroundColor: glow }}
         transition={{ duration: 1.1, ease: EASE }}
-        className="absolute left-1/2 top-[30%] -z-10 h-[70vh] w-[120vw] -translate-x-1/2 rounded-[50%] opacity-[0.28] blur-[90px] sm:w-[80vw]"
+        className="absolute left-1/2 top-[18%] -z-10 h-[64%] w-[120vw] -translate-x-1/2 rounded-[50%] opacity-[0.28] blur-[90px] sm:w-[80vw]"
       />
-      <EmberField className="-z-10" density={0.7} tint={glow} />
 
-      <div className="container-site flex items-end justify-between gap-6">
-        <div>
-          <span className="text-[12px] font-semibold uppercase tracking-[0.28em] text-amber">{copy.eyebrow}</span>
-          <h2 className="mt-3 font-display text-[clamp(40px,9vw,80px)] font-semibold leading-[0.95] tracking-[-0.02em]">{copy.title}</h2>
-        </div>
-        <p className="font-display text-xl tabular-nums text-bone/60 sm:text-2xl" aria-hidden="true">
-          <span className="text-bone">{pad(active + 1)}</span> / {pad(count)}
-        </p>
+      <div className="container-site">
+        <h2 className="max-w-[16ch] font-display text-[clamp(40px,9vw,80px)] font-semibold leading-[0.95] tracking-[-0.02em]">{copy.title}</h2>
       </div>
 
       {/* Bühne */}
@@ -288,21 +274,6 @@ export function FlavorSlider({
         {flavors.map((f, i) => (
           <Bottle key={f.slug} f={f} index={i} progress={progress} spacing={spacing} active={i === active} onSelect={goTo} />
         ))}
-        <AnimatePresence>
-          {!interacted && (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 1.2 } }}
-              exit={{ opacity: 0 }}
-              aria-hidden="true"
-              className="absolute bottom-[3%] left-1/2 flex -translate-x-1/2 items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-bone/55"
-            >
-              <span className="motion-safe:animate-[nudge_1.8s_ease-in-out_infinite]">←</span>
-              {copy.hint}
-              <span className="motion-safe:animate-[nudge_1.8s_ease-in-out_infinite_reverse]">→</span>
-            </motion.p>
-          )}
-        </AnimatePresence>
       </div>
 
       {/* Info + bediening */}
@@ -317,7 +288,6 @@ export function FlavorSlider({
               exit={reduce ? { opacity: 0 } : { opacity: 0, x: -16 * dir, transition: { duration: 0.2 } }}
               className="flex max-w-xl flex-col gap-3"
             >
-              <span className="text-[12px] font-semibold uppercase tracking-[0.24em] text-amber">{characterLabels[current.character]}</span>
               <h3 className="font-display text-[clamp(44px,11vw,72px)] font-semibold leading-none tracking-[-0.02em]">
                 {current.name.split('').map((ch, i) => (
                   <motion.span
@@ -333,14 +303,11 @@ export function FlavorSlider({
               <p className="font-display text-xl italic text-bone/85">{current.tagline}</p>
               <p className="max-w-[46ch] text-[15px] leading-relaxed text-bone/65">{current.description}</p>
               <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-4">
-                <Link
-                  href={current.href}
-                  className="inline-flex min-h-[52px] items-center gap-2 rounded-full bg-bone px-6 font-semibold text-char no-underline transition-colors duration-300 hover:bg-amber hover:text-char"
-                >
-                  {copy.view} {current.name} <span aria-hidden="true">→</span>
+                <Link href={current.href} className="btn-on-dark">
+                  {copy.view} {current.name}
                 </Link>
                 <span className="text-[15px] text-bone/70">
-                  {volume} · <strong className="text-bone">{current.price ?? pricePlaceholder}</strong>
+                  {characterLabels[current.character]} · {volume}
                 </span>
               </div>
             </motion.div>

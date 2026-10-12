@@ -4,6 +4,7 @@ const config: Config = {
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
   theme: {
     extend: {
+      screens: { xs: '360px' },
       colors: {
         paper: '#FBF8F1',
         cream: '#F4EEE1',
@@ -23,8 +24,8 @@ const config: Config = {
         bone: '#EDE6DA',
       },
       fontFamily: {
-        display: ['"Fraunces Variable"', 'Georgia', 'serif'],
-        sans: ['"Work Sans Variable"', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'Georgia', 'Times New Roman', 'serif'],
+        sans: ['var(--font-sans)', 'system-ui', '-apple-system', 'sans-serif'],
       },
       maxWidth: { site: '1280px' },
       transitionTimingFunction: { out: 'cubic-bezier(0.16, 1, 0.3, 1)' },

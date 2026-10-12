@@ -1,6 +1,5 @@
-import '@fontsource-variable/fraunces';
-import '@fontsource-variable/work-sans';
 import '../globals.css';
+import { Bodoni_Moda, Inter } from 'next/font/google';
 import type { Metadata, Viewport } from 'next';
 import { notFound } from 'next/navigation';
 import { AgeGate } from '@/components/AgeGate';
@@ -9,6 +8,29 @@ import { Header } from '@/components/Header';
 import { JsonLd } from '@/components/JsonLd';
 import { getDictionary, isLocale, locales } from '@/lib/i18n';
 import { organizationJsonLd, siteUrl } from '@/lib/site';
+
+/**
+ * Bodoni Moda is dezelfde soort letter als het wordmerk in het logo: Didone, hoog
+ * contrast, verticale as. De optical-size-as houdt hem scherp op displayformaat
+ * zonder dat de haarlijnen op kleine maten wegvallen. Inter blijft eronder rustig.
+ */
+const display = Bodoni_Moda({
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  variable: '--font-display',
+  display: 'swap',
+  preload: true,
+  // Next kan voor Bodoni Moda geen metric-aangepaste fallback afleiden (voor Inter
+  // wel). Zonder expliciete lijst valt hij terug op een generieke serif en springt
+  // juist de grootste kop zichtbaar bij het inladen.
+  fallback: ['Georgia', 'Times New Roman', 'serif'],
+});
+
+const sans = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+});
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -34,7 +56,7 @@ export default function LocaleLayout({ children, params }: { children: React.Rea
   const t = getDictionary(locale);
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={`${display.variable} ${sans.variable}`}>
       <body>
         <a href="#inhoud" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-paper focus:px-4 focus:py-2">
           {t.skip}

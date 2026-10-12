@@ -7,7 +7,7 @@ const nl = {
     body: 'Acht likeuren, met de hand gemaakt in kleine oplages. Niet om overal hetzelfde te smaken.',
     cta: 'Ontdek de 8 smaken',
     scroll: 'Scroll',
-    bottleAlt: 'Fles Epilos, ambachtelijke likeur van A Bear’s Batch',
+    bottleAlt: 'Zeven flessen A Bear’s Batch op een houten blok: Colkina, Epilos, Floreta, Fragaki, Silkimi, Teposo en Haktiri',
   },
   manifesto:
     'De meeste likeuren worden op één manier gemaakt. Wij doen het op drie of vier manieren tegelijk, en voegen ze pas aan het einde samen. Meer werk. Maar dat proef je.',
@@ -25,10 +25,22 @@ const nl = {
     eyebrow: 'Het proces',
     title: 'Langzaam, met de hand, zonder kortere weg.',
     steps: [
-      { title: 'Proeven', text: '[korte uitleg van De Beer]' },
-      { title: 'Drie, vier methodes', text: 'Elke smaak maken we op meerdere manieren tegelijk.' },
-      { title: 'Samenvoegen', text: 'Pas aan het einde komt alles samen tot één smaak.' },
-      { title: 'Met de hand afgemaakt', text: 'Het etiket zetten we er zelf op. Fles voor fles.' },
+      {
+        title: 'Proeven',
+        text: 'Elke smaak begint in de keuken. We zoeken combinaties die je niet verwacht, proeven bij en beginnen opnieuw tot het klopt. Geen bestaand recept: pas als een smaak ons zelf verrast, gaat hij door.',
+      },
+      {
+        title: 'Drie, vier methodes',
+        text: 'De meeste likeuren worden op één manier gemaakt. Wij infuseren vaak op drie of vier manieren tegelijk, omdat elk ingrediënt zijn eigen tempo heeft. Zo halen we eruit wat er echt in zit.',
+      },
+      {
+        title: 'Samenvoegen',
+        text: 'Pas aan het einde komen die losse delen samen tot één smaak. Dat is het moment waarop blijkt of het werkt: het verschil tussen lekker en even blijven zitten.',
+      },
+      {
+        title: 'Met de hand afgemaakt',
+        text: 'We snijden het fruit, filteren, bottelen en plakken elk etiket zelf. Echte ingrediënten, geen onnodige kleur- of smaakstoffen. Geen machines, kleine batches, fles voor fles.',
+      },
     ],
   },
   maker: {
@@ -55,7 +67,7 @@ const en: Copy = {
     body: 'Eight liqueurs, handmade in small batches. Not made to taste the same everywhere.',
     cta: 'Discover the 8 flavours',
     scroll: 'Scroll',
-    bottleAlt: "Bottle of Epilos, craft liqueur by A Bear's Batch",
+    bottleAlt: "Seven bottles of A Bear's Batch on a wooden block: Colkina, Epilos, Floreta, Fragaki, Silkimi, Teposo and Haktiri",
   },
   manifesto:
     'Most liqueurs are made one way. We make ours three or four ways at once, and only bring them together at the very end. More work. But you can taste it.',
@@ -73,10 +85,22 @@ const en: Copy = {
     eyebrow: 'The process',
     title: 'Slowly, by hand, no shortcuts.',
     steps: [
-      { title: 'Tasting', text: '[short explanation by De Beer]' },
-      { title: 'Three or four methods', text: 'We make every flavour several ways at once.' },
-      { title: 'Bringing it together', text: 'Only at the very end does it all become one flavour.' },
-      { title: 'Finished by hand', text: 'We put every label on ourselves. Bottle by bottle.' },
+      {
+        title: 'Tasting',
+        text: 'Every flavour starts in the kitchen. We look for combinations you would not expect, taste, and begin again until it is right. No existing recipe: a flavour only moves on once it surprises us.',
+      },
+      {
+        title: 'Three or four methods',
+        text: 'Most liqueurs are made one way. We often infuse three or four ways at once, because every ingredient has its own pace. That is how we draw out what is really in there.',
+      },
+      {
+        title: 'Bringing it together',
+        text: 'Only at the very end do those separate parts become a single flavour. That is the moment it shows whether it works: the difference between nice and worth staying for.',
+      },
+      {
+        title: 'Finished by hand',
+        text: 'We cut the fruit, filter, bottle and apply every label ourselves. Real ingredients, no needless colourings or flavourings. No machines, small batches, bottle by bottle.',
+      },
     ],
   },
   maker: {
