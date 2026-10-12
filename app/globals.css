@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    line-height: 1.55;
+  }
+  a:hover {
+    @apply text-copper;
+  }
+  :focus-visible {
+    outline: 2px solid #a35f2a;
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply text-[13px] font-semibold uppercase tracking-[0.14em] text-mid;
+  }
+  .btn-primary {
+    @apply inline-flex min-h-[52px] items-center justify-center rounded-full bg-copper px-7 font-semibold text-paper no-underline transition-colors hover:bg-bark hover:text-paper;
+  }
+  .btn-outline {
+    @apply inline-flex min-h-[44px] items-center justify-center rounded-full border border-ink px-5 text-sm font-semibold text-ink transition-colors hover:bg-ink hover:text-paper;
+  }
+  .container-site {
+    @apply mx-auto w-full max-w-site px-4 sm:px-8;
+  }
+  .placeholder-photo {
+    @apply flex items-center justify-center rounded-xl bg-cream p-2 text-center text-xs text-muted;
+  }
+}
